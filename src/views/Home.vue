@@ -1,8 +1,11 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
-  </div>
+  <v-container fluid>
+    <v-row justify="center">
+      <v-col cols="3">
+        <v-toolbar-title> Home </v-toolbar-title>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">

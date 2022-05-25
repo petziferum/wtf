@@ -3,6 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "strict": true,
+    "noImplicitAny": false,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
@@ -12,8 +13,11 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "strictPropertyInitialization": false,
     "types": [
-      "webpack-env"
+      "webpack-env",
+      "node",
+      "vuetify"
     ],
     "paths": {
       "@/*": [
