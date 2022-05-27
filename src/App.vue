@@ -7,20 +7,11 @@
   </v-app>
 </template>
 
-<script>
-import Home from "@/views/Home";
-import AppBar from "@/components/structure/AppBar";
+<script lang="ts">
+import Home from "@/views/Home.vue";
+import AppBar from "@/components/structure/AppBar.vue";
+import { Component, Vue } from "vue-property-decorator";
 
-export default {
-  name: "App",
-
-  components: {
-    AppBar,
-    Home,
-  },
-
-  data: () => ({
-    //
-  }),
-};
+@Component({ components: { Home, AppBar } })
+export default class App extends Vue {}
 </script>
