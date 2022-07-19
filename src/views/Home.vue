@@ -51,7 +51,7 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-row justify="center">
+    <v-row justify="center" class="mt-12" style="border-top: 3px solid grey">
       <v-col cols="4">
         <template>
           <v-form ref="input" @submit.prevent="submitItem">
@@ -67,15 +67,18 @@
                 </v-text-field>
               </v-col>
               <v-col cols="8">
-                <v-text-field
+                <v-autocomplete
                   dense
                   id="item"
                   label="Zutat"
                   hint="Mit Enter hinzufügen"
                   persistent-hint
                   outlined
+                  @input="searchIngredient"
                   v-model="item"
-                ></v-text-field>
+                  item-text="value"
+                  :items="ingredients"
+                ></v-autocomplete>
               </v-col>
               <v-col cols="1">
                 <v-btn type="submit" height="60%" outlined>hinzufügen</v-btn>
@@ -109,7 +112,32 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import HelloWorld from "@/modules/HelloWorld.vue"; // @ is an alias to /src
+
+export enum Ingredient {
+  ZUCKER = "Zucker",
+  MEHL = "Mehl",
+  HACKFLEISCH = "Hackfleisch",
+  PASSIERTE_TOMATEN = "Passierte Tomaten",
+  SPAGHETTI = "Spaghetti",
+}
+
+const IngredientToBeschreibung = new Map<string, string>([
+  [Ingredient.HACKFLEISCH, "Hackfleisch"],
+  [Ingredient.MEHL, "Mehl"],
+  [Ingredient.ZUCKER, "Zucker"],
+  [Ingredient.PASSIERTE_TOMATEN, "Passierte Tomaten"],
+  [Ingredient.SPAGHETTI, "Spaghetti"],
+]);
+
+export const ingredientsAsRecord: Record<string, string>[] = Object.values(
+  Ingredient
+).map((key) => {
+  return {
+    key: key,
+    value: IngredientToBeschreibung.get(key) as string,
+  };
+});
 
 export interface Zutat {
   menge: string;
@@ -126,6 +154,7 @@ export interface Rezept {
   id: string;
   name: string;
   description: string;
+  type: string;
   ingredients: Zutat[];
   steps: Step[];
 }
@@ -142,11 +171,17 @@ export default class Home extends Vue {
   itemList: Zutat[] = [];
   rezept: Rezept | null = null;
   loading = false;
+  ingredients = ingredientsAsRecord;
+
+  searchIngredient(): void {
+    console.info("suche nach: ", this.item);
+  }
 
   loadRezept(): void {
     this.loading = true;
     const r: Rezept = {
       id: "r1",
+      type: "normal",
       name: "Schwurzföggbräthurz",
       description: "Ein guter Schwurzföggbräthurz hält jung!",
       ingredients: this.itemList,
