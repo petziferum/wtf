@@ -32,10 +32,9 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class Header extends Vue {
-
   searchValue = "";
 
-  search() {
+  search(): void {
     console.info("Es wird nach", this.searchValue, "gesucht");
   }
 }
