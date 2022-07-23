@@ -22,52 +22,10 @@ import { Component, Vue } from "vue-property-decorator";
 import HelloWorld from "@/modules/HelloWorld.vue";
 import RezeptView from "@/modules/features/rezeptbuch/RezeptView.vue";
 import Loader from "@/modules/commons/loader.vue";
-import RecipeForm from "@/modules/features/rezeptbuch/components/RecipeForm.vue"; // @ is an alias to /src
-
-export enum Ingredient {
-  ZUCKER = "Zucker",
-  MEHL = "Mehl",
-  HACKFLEISCH = "Hackfleisch",
-  PASSIERTE_TOMATEN = "Passierte Tomaten",
-  SPAGHETTI = "Spaghetti",
-}
-
-const IngredientToBeschreibung = new Map<string, string>([
-  [Ingredient.HACKFLEISCH, "Hackfleisch"],
-  [Ingredient.MEHL, "Mehl"],
-  [Ingredient.ZUCKER, "Zucker"],
-  [Ingredient.PASSIERTE_TOMATEN, "Passierte Tomaten"],
-  [Ingredient.SPAGHETTI, "Spaghetti"],
-]);
-
-export const ingredientsAsRecord: Record<string, string>[] = Object.values(
-  Ingredient
-).map((key) => {
-  return {
-    key: key,
-    value: IngredientToBeschreibung.get(key) as string,
-  };
-});
-
-export interface Zutat {
-  menge: string;
-  zutat: string;
-}
-
-export interface Step {
-  nr: number;
-  description: string;
-  image: string;
-}
-
-export interface Rezept {
-  id: string;
-  name: string;
-  description: string;
-  type: string;
-  ingredients: Zutat[];
-  steps: Step[];
-}
+import RecipeForm from "@/modules/features/rezeptbuch/components/RecipeForm.vue";
+import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
+import Zutat from "@/modules/features/rezeptbuch/types/Zutat"; // @ is an alias to /src
+import RecipeStep from "@/modules/features/rezeptbuch/types/RecipeStep";
 
 @Component({
   components: {
@@ -78,26 +36,29 @@ export interface Rezept {
   },
 })
 export default class Home extends Vue {
-  rezept: Rezept | null = null;
+  rezept: Recipe | null = null;
   loading = false;
   itemList: Zutat[] = [];
 
   loadRezept(): void {
     this.loading = true;
-    const r: Rezept = {
-      id: "r129311fq3",
-      type: "normal",
-      name: "Schwurzföggbräthurz",
-      description: "Ein guter Schwurzföggbräthurz hält jung!",
-      ingredients: this.itemList,
-      steps: [
-        {
-          nr: 1,
-          description: "Den Mond anbellen",
-          image: "http://bild.de/img.png",
-        },
-      ],
-    };
+    const r: Recipe = Recipe.createEmtptyRecipe()
+      .withId("r129311fq3")
+      .withType("normal")
+      .withRecipeName("Schwurzföggbrätwurtz")
+      .withCreatedBy("Feinschmecker_Lars")
+      .withDescription("Ein guter Schwurzföggbräthurz hält jung!")
+      .withImageSrc("https://google.com");
+    r.addIngredient(
+      Zutat.createEmtptyZutat().withName("Rotze").withNr(23).withMenge("500g")
+    );
+    r.addStep(
+      RecipeStep.createEmtptyRecipeStep()
+        .withImg("bildSrc")
+        .withNr(1)
+        .withText("Den Herd aufdrehen")
+    );
+
     setTimeout(() => {
       this.rezept = r;
       this.loading = false;

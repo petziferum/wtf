@@ -59,18 +59,24 @@
 
 <script lang="ts">
 import { Component, PropSync, Vue } from "vue-property-decorator";
-import { ingredientsAsRecord, Rezept, Step, Zutat } from "@/views/Home.vue";
+import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
+import RecipeStep from "@/modules/features/rezeptbuch/types/RecipeStep";
+import Zutat from "@/modules/features/rezeptbuch/types/Zutat";
+import { ingredientsAsRecord } from "@/modules/features/rezeptbuch/types/Ingredients.type";
 
 @Component
 export default class RecipeForm extends Vue {
   @PropSync("value")
-  recipe: Rezept;
+  recipe: Recipe;
 
   menge = "";
-  step: Step = { nr: 0, description: "", image: "http://bild.com/img.png" };
+  step: RecipeStep = RecipeStep.createEmtptyRecipeStep()
+    .withNr(0)
+    .withText("")
+    .withImg("http://bild.com/img.png");
   item = "";
   itemList: Zutat[] = [];
-  rezept: Rezept | null = null;
+  rezept: Recipe | null = null;
   ingredients = ingredientsAsRecord;
 
   searchIngredient(): void {
@@ -80,7 +86,10 @@ export default class RecipeForm extends Vue {
   submitItem(): void {
     console.info("hinzufügen");
     if (this.item.length > 0) {
-      const z: Zutat = { menge: this.menge, zutat: this.item };
+      const z: Zutat = Zutat.createEmtptyZutat()
+        .withMenge(this.menge)
+        .withName(this.item);
+
       this.itemList.push(z);
       this.item = "";
       this.menge = "";
@@ -88,10 +97,15 @@ export default class RecipeForm extends Vue {
   }
 
   addStep(): void {
-    if (this.step.description.length > 0) {
-      this.step.nr = this.rezept ? this.rezept.steps.length + 1 : 1;
-      this.rezept?.steps.push(this.step);
-      this.step = { nr: 0, description: "", image: "http://bild.com/img.png" };
+    if (this.step.text!.length > 0) {
+      this.step.nr = this.rezept ? this.rezept.steps!.length + 1 : 1;
+      this.rezept
+        ? this.rezept.steps!.push(this.step)
+        : (this.rezept!.steps! = [RecipeStep.createEmtptyRecipeStep()]);
+      this.step = RecipeStep.createEmtptyRecipeStep()
+        .withNr(0)
+        .withText("")
+        .withImg("http://bild.com/img.png");
     }
   }
 }

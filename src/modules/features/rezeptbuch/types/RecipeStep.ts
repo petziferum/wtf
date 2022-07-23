@@ -19,7 +19,7 @@ export default class RecipeStep {
     return this;
   }
 
-  withtext(value: string): RecipeStep {
+  withText(value: string): RecipeStep {
     this.text = value;
     return this;
   }
