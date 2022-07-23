@@ -7,8 +7,8 @@
     </v-row>
 
     <template>
-      <rezept-view v-if="!loading" v-model="rezept" />
-      <loader v-else :loading="loading"></loader>
+      <loader v-if="loading" :loading="loading" />
+      <rezept-view v-else v-model="rezept" />
     </template>
 
     <template>
