@@ -2,8 +2,15 @@
   <v-row justify="center">
     <v-col cols="12" md="6">
       <v-card>
-        <v-card-title>{{ rezept.recipeName }}</v-card-title>
-        <v-card-subtitle> id: {{ rezept.id }} <v-spacer />Erschaffer: {{ rezept.createdBy }}</v-card-subtitle>
+        <v-card-title
+          >{{ rezept.recipeName }}
+          <v-spacer />
+          <v-img :src="rezept.imageSrc" max-width="200" max-height="100"></v-img
+        ></v-card-title>
+        <v-card-subtitle>
+          id: {{ rezept.id }} <v-spacer />Erschaffer:
+          {{ rezept.createdBy }}</v-card-subtitle
+        >
 
         <v-row>
           <v-col cols="4">
@@ -16,11 +23,9 @@
             </template>
           </v-col>
           <v-col cols="8">
-            <v-card-text>
-              {{ rezept.description }}<br>
-            </v-card-text>
+            <v-card-text> {{ rezept.description }}<br /> </v-card-text>
             Zubereitungsschritte:
-            <v-row v-for="(step, i) in rezept.steps" :key="i">
+            <v-row v-for="(step, i) in rezept.recipeDescription" :key="i">
               <v-col cols="1">
                 {{ step.nr }}
               </v-col>
@@ -29,7 +34,9 @@
                   {{ step.text }}
                 </v-card-text>
               </v-col>
-              <v-col cols="3">{{ step.img }}</v-col>
+              <v-col cols="3"
+                ><v-img :src="step.img" max-width="100"></v-img
+              ></v-col>
             </v-row>
           </v-col>
         </v-row>
@@ -46,7 +53,7 @@ import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
   components: { RezeptTitle },
 })
 export default class RezeptView extends Vue {
-  @PropSync("value",{ type: Recipe})
+  @PropSync("value", { type: Recipe })
   rezept;
 }
 </script>

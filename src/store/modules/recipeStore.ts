@@ -52,13 +52,12 @@ export default {
     fetchRecipes({ commit }: Commit): void {
       console.log("fetchAktion");
       const rezepte = RecipeServiceApi.fetchRecipes();
-      commit("INIT_RECIPES", rezepte)
+      commit("INIT_RECIPES", rezepte);
     },
 
-    addRecipe({commit}: Commit, recipeToAdd) {
+    addRecipe({ commit }: Commit, recipeToAdd): void {
       console.log("add");
-
-    }
+    },
   },
   getters: {
     getRezepte(state: Content): Recipe[] {

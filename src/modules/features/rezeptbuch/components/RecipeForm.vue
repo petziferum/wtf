@@ -101,10 +101,14 @@ export default class RecipeForm extends Vue {
 
   addStep(): void {
     if (this.step.text!.length > 0) {
-      this.step.nr = this.rezept ? this.rezept.steps!.length + 1 : 1;
+      this.step.nr = this.rezept
+        ? this.rezept.recipeDescription!.length + 1
+        : 1;
       this.rezept
-        ? this.rezept.steps!.push(this.step)
-        : (this.rezept!.steps! = [RecipeStep.createEmtptyRecipeStep()]);
+        ? this.rezept.recipeDescription!.push(this.step)
+        : (this.rezept!.recipeDescription! = [
+            RecipeStep.createEmtptyRecipeStep(),
+          ]);
       this.step = RecipeStep.createEmtptyRecipeStep()
         .withNr(0)
         .withText("")

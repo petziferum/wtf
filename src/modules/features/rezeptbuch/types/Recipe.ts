@@ -10,7 +10,7 @@ export default class Recipe {
     public recipeName?: string,
     public type?: string,
     public ingredients?: Zutat[],
-    public steps?: RecipeStep[]
+    public recipeDescription?: RecipeStep[]
   ) {
     this.id = id;
     this.createdBy = createdBy;
@@ -18,7 +18,7 @@ export default class Recipe {
     this.description = description;
     this.type = type;
     this.ingredients = ingredients;
-    this.steps = steps;
+    this.recipeDescription = recipeDescription;
   }
 
   withId(value: string): Recipe {
@@ -55,8 +55,8 @@ export default class Recipe {
     return this;
   }
 
-  withSteps(value: RecipeStep[]): Recipe {
-    this.steps = value;
+  withRecipeDescription(value: RecipeStep[]): Recipe {
+    this.recipeDescription = value;
     return this;
   }
 
@@ -68,7 +68,9 @@ export default class Recipe {
   }
 
   addStep(value: RecipeStep): Recipe {
-    this.steps ? this.steps.push(value) : (this.steps = [value]);
+    this.recipeDescription
+      ? this.recipeDescription.push(value)
+      : (this.recipeDescription = [value]);
     return this;
   }
 

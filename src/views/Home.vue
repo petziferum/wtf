@@ -1,8 +1,8 @@
 <template>
-  <v-container fluid>
+  <v-container fluid style="background-color: lightslategrey">
     <v-row justify="center">
       <v-col cols="3">
-        <v-toolbar-title> Home {{ loading }}</v-toolbar-title>
+        <v-toolbar-title> Home</v-toolbar-title>
       </v-col>
     </v-row>
 
@@ -54,7 +54,7 @@ export default class Home extends Vue {
   }
 
   fetch(): void {
-    this.$store.dispatch("recipeStore/fetchRecipes")
+    this.$store.dispatch("recipeStore/fetchRecipes");
   }
 
   loadRezepte(): void {
@@ -67,7 +67,7 @@ export default class Home extends Vue {
 
   beforeMount(): void {
     console.log("user gefunden", this.user);
-    this.loadRezepte();
+    this.fetch();
   }
 }
 </script>
