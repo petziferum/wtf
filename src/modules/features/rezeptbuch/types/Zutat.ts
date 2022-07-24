@@ -1,5 +1,11 @@
+import { Ingredient } from "@/modules/features/rezeptbuch/types/Ingredients.type";
+
 export default class Zutat {
-  constructor(public nr?: number, public name?: string, public menge?: string) {
+  constructor(
+    public nr?: number,
+    public name?: Ingredient,
+    public menge?: string
+  ) {
     (this.nr = nr), (this.name = name), (this.menge = menge);
   }
 
@@ -12,7 +18,7 @@ export default class Zutat {
     return this;
   }
 
-  withName(value: string): Zutat {
+  withName(value: Ingredient): Zutat {
     this.name = value;
     return this;
   }

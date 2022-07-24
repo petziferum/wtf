@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-col cols="12" md="3">
-      <v-icon>mdi-loading mdi-spin</v-icon> Lade...
+      <v-icon large>mdi-loading mdi-spin</v-icon> Lade...
     </v-col>
   </v-row>
 </template>

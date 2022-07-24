@@ -8,11 +8,14 @@
 
     <template>
       <loader v-if="loading" :loading="loading" />
-      <rezept-view v-else v-model="rezept" />
+
+      <template v-else v-for="rezept in recipes">
+        <rezept-view :key="rezept.id" :value="rezept" />
+      </template>
     </template>
 
     <template>
-      <recipe-form v-model="rezept" />
+      <recipe-form v-model="editRecipe" />
     </template>
   </v-container>
 </template>
@@ -24,8 +27,7 @@ import RezeptView from "@/modules/features/rezeptbuch/RezeptView.vue";
 import Loader from "@/modules/commons/loader.vue";
 import RecipeForm from "@/modules/features/rezeptbuch/components/RecipeForm.vue";
 import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
-import Zutat from "@/modules/features/rezeptbuch/types/Zutat"; // @ is an alias to /src
-import RecipeStep from "@/modules/features/rezeptbuch/types/RecipeStep";
+import Zutat from "@/modules/features/rezeptbuch/types/Zutat";
 
 @Component({
   components: {
@@ -36,37 +38,24 @@ import RecipeStep from "@/modules/features/rezeptbuch/types/RecipeStep";
   },
 })
 export default class Home extends Vue {
-  rezept: Recipe | null = null;
   loading = false;
   itemList: Zutat[] = [];
+  editRecipe: Recipe = Recipe.createEmtptyRecipe();
 
-  loadRezept(): void {
+  get recipes(): Recipe[] {
+    return this.$store.getters["recipeStore/getRezepte"];
+  }
+
+  loadRezepte(): void {
     this.loading = true;
-    const r: Recipe = Recipe.createEmtptyRecipe()
-      .withId("r129311fq3")
-      .withType("normal")
-      .withRecipeName("Schwurzföggbrätwurtz")
-      .withCreatedBy("Feinschmecker_Lars")
-      .withDescription("Ein guter Schwurzföggbräthurz hält jung!")
-      .withImageSrc("https://google.com");
-    r.addIngredient(
-      Zutat.createEmtptyZutat().withName("Rotze").withNr(23).withMenge("500g")
-    );
-    r.addStep(
-      RecipeStep.createEmtptyRecipeStep()
-        .withImg("bildSrc")
-        .withNr(1)
-        .withText("Den Herd aufdrehen")
-    );
-
-    setTimeout(() => {
-      this.rezept = r;
+    this.$store.dispatch("recipeStore/initiateRecipes").then(() => {
       this.loading = false;
-    }, 2000);
+      this.editRecipe = this.recipes[0];
+    });
   }
 
   beforeMount(): void {
-    this.loadRezept();
+    this.loadRezepte();
   }
 }
 </script>

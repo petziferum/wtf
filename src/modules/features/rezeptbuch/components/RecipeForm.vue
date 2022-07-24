@@ -23,7 +23,7 @@
                 persistent-hint
                 outlined
                 @input="searchIngredient"
-                v-model="item"
+                v-model="zutatName"
                 item-text="value"
                 :items="ingredients"
               ></v-autocomplete>
@@ -62,7 +62,10 @@ import { Component, PropSync, Vue } from "vue-property-decorator";
 import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
 import RecipeStep from "@/modules/features/rezeptbuch/types/RecipeStep";
 import Zutat from "@/modules/features/rezeptbuch/types/Zutat";
-import { ingredientsAsRecord } from "@/modules/features/rezeptbuch/types/Ingredients.type";
+import {
+  Ingredient,
+  ingredientsAsRecord,
+} from "@/modules/features/rezeptbuch/types/Ingredients.type";
 
 @Component
 export default class RecipeForm extends Vue {
@@ -74,24 +77,24 @@ export default class RecipeForm extends Vue {
     .withNr(0)
     .withText("")
     .withImg("http://bild.com/img.png");
-  item = "";
+  zutatName: Ingredient = Ingredient.MEHL;
   itemList: Zutat[] = [];
   rezept: Recipe | null = null;
   ingredients = ingredientsAsRecord;
 
   searchIngredient(): void {
-    console.info("suche nach: ", this.item);
+    console.info("suche nach: ", this.zutatName);
   }
 
   submitItem(): void {
     console.info("hinzufügen");
-    if (this.item.length > 0) {
+    if (this.zutatName.length > 0) {
       const z: Zutat = Zutat.createEmtptyZutat()
         .withMenge(this.menge)
-        .withName(this.item);
+        .withName(this.zutatName);
 
       this.itemList.push(z);
-      this.item = "";
+      this.zutatName = Ingredient.MEHL;
       this.menge = "";
     }
   }
