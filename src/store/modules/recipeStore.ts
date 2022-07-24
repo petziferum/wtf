@@ -48,6 +48,11 @@ export default {
       payload.push(r);
       commit("INIT_RECIPES", payload);
     },
+
+    addRecipe({commit}: Commit, recipeToAdd) {
+      console.log("add");
+
+    }
   },
   getters: {
     getRezepte(state: Content): Recipe[] {

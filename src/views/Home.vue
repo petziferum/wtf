@@ -28,6 +28,8 @@ import Loader from "@/modules/commons/loader.vue";
 import RecipeForm from "@/modules/features/rezeptbuch/components/RecipeForm.vue";
 import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
 import Zutat from "@/modules/features/rezeptbuch/types/Zutat";
+import firebase from "firebase/compat";
+import User = firebase.User;
 
 @Component({
   components: {
@@ -46,6 +48,10 @@ export default class Home extends Vue {
     return this.$store.getters["recipeStore/getRezepte"];
   }
 
+  get user(): User {
+    return this.$store.getters["GET_USER"];
+  }
+
   loadRezepte(): void {
     this.loading = true;
     this.$store.dispatch("recipeStore/initiateRecipes").then(() => {
@@ -55,6 +61,7 @@ export default class Home extends Vue {
   }
 
   beforeMount(): void {
+    console.log("user gefunden", this.user);
     this.loadRezepte();
   }
 }
