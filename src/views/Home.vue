@@ -17,6 +17,7 @@
     <template>
       <recipe-form v-model="editRecipe" />
     </template>
+    <v-btn @click="fetch">fetch</v-btn>
   </v-container>
 </template>
 
@@ -50,6 +51,10 @@ export default class Home extends Vue {
 
   get user(): User {
     return this.$store.getters["GET_USER"];
+  }
+
+  fetch(): void {
+    this.$store.dispatch("recipeStore/fetchRecipes")
   }
 
   loadRezepte(): void {

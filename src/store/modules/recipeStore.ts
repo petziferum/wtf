@@ -3,6 +3,7 @@ import Zutat from "@/modules/features/rezeptbuch/types/Zutat";
 import { Ingredient } from "@/modules/features/rezeptbuch/types/Ingredients.type";
 import RecipeStep from "@/modules/features/rezeptbuch/types/RecipeStep";
 import { Commit } from "@/store";
+import RecipeServiceApi from "@/store/modules/recipeServiceApi";
 
 export interface Content {
   recipes: Recipe[];
@@ -47,6 +48,11 @@ export default {
       );
       payload.push(r);
       commit("INIT_RECIPES", payload);
+    },
+    fetchRecipes({ commit }: Commit): void {
+      console.log("fetchAktion");
+      const rezepte = RecipeServiceApi.fetchRecipes();
+      commit("INIT_RECIPES", rezepte)
     },
 
     addRecipe({commit}: Commit, recipeToAdd) {

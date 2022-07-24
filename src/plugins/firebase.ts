@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { collection, getDocs, getFirestore, query } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
@@ -17,5 +17,11 @@ const firebaseApp = initializeApp(firebaseConfig);
 const fireBucket = getStorage(firebaseApp);
 const fireAuth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
-export { fireAuth, fireBucket, firestore };
+const getCollection = async () => {
+  const docRef = query(collection(firestore, "recipes"));
+  return await getDocs(docRef);
+};
+
+export { fireAuth, fireBucket, firestore, getCollection };
+
 export default firebaseApp;
