@@ -1,8 +1,12 @@
 import Vue from "vue";
 import Vuex, { CommitOptions, Payload } from "vuex";
-import recipeStore from "@/store/modules/recipeStore";
+import recipeStoreModule from "@/store/modules/recipeStore";
 
 Vue.use(Vuex);
+
+export interface Rootstate {
+  loading: boolean;
+}
 
 export interface Commit {
   commit: CommitAction;
@@ -28,6 +32,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    recipeStore,
+    recipeStoreModule,
   },
 });

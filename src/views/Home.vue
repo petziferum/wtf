@@ -9,8 +9,17 @@
     <template>
       <loader v-if="loading" :loading="loading" />
 
-      <template v-else v-for="rezept in recipes">
-        <rezept-view :key="rezept.id" :value="rezept" />
+      <template v-else>
+        <v-expansion-panels>
+          <v-expansion-panel v-for="rezept in recipes" :key="rezept.id">
+            <v-expansion-panel-header>{{
+              rezept.recipeName
+            }}</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <rezept-view :value="rezept" />
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </template>
     </template>
 
@@ -31,6 +40,11 @@ import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
 import Zutat from "@/modules/features/rezeptbuch/types/Zutat";
 import firebase from "firebase/compat";
 import User = firebase.User;
+import {
+  getRecipes,
+  initRecipes,
+  RECIPE_STORE_MODULE,
+} from "@/store/modules/recipeStore";
 
 @Component({
   components: {
@@ -46,15 +60,11 @@ export default class Home extends Vue {
   editRecipe: Recipe = Recipe.createEmtptyRecipe();
 
   get recipes(): Recipe[] {
-    return this.$store.getters["recipeStore/getRezepte"];
-  }
-
-  get user(): User {
-    return this.$store.getters["GET_USER"];
+    return this.$store.getters[getRecipes()];
   }
 
   fetch(): void {
-    this.$store.dispatch("recipeStore/fetchRecipes");
+    this.$store.dispatch(initRecipes());
   }
 
   loadRezepte(): void {
@@ -66,7 +76,6 @@ export default class Home extends Vue {
   }
 
   beforeMount(): void {
-    console.log("user gefunden", this.user);
     this.fetch();
   }
 }

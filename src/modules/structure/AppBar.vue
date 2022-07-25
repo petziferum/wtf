@@ -12,7 +12,8 @@
     </div>
 
     <v-spacer></v-spacer>
-
+    Hallo {{ user.email }}
+    <v-spacer />
     <v-btn href="https://recipes-petzi.web.app" target="_blank" text>
       <span class="mr-2">Food Tinder</span>
       <v-icon>mdi-open-in-new</v-icon>
@@ -22,9 +23,16 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import firebase from "firebase/compat";
+import User = firebase.User;
 
 @Component
-export default class AppBar extends Vue {}
+export default class AppBar extends Vue {
+
+  get user(): User {
+    return this.$store.getters["GET_USER"];
+  }
+}
 </script>
 
 <style scoped></style>
