@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-col cols="12" md="6">
+    <v-col cols="12" md="12">
       <v-card>
         <v-card-title
           >{{ rezept.recipeName }}
@@ -13,7 +13,7 @@
         >
 
         <v-row>
-          <v-col cols="4">
+          <v-col cols="12" md="4">
             <template v-for="(card, i) in rezept.ingredients">
               <v-card dense width="100%" class="pa-0 ma-0" height="30" :key="i">
                 <v-card-text class="pa-1 ma-0"
@@ -22,7 +22,7 @@
               </v-card>
             </template>
           </v-col>
-          <v-col cols="8">
+          <v-col cols="12" md="8">
             <v-card-text> {{ rezept.description }}<br /> </v-card-text>
             Zubereitungsschritte:
             <v-row v-for="(step, i) in rezept.recipeDescription" :key="i">

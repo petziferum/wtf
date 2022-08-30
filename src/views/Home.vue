@@ -6,22 +6,24 @@
       </v-col>
     </v-row>
 
-    <template>
-      <loader v-if="loading" :loading="loading" />
+    <v-row justify="center">
+      <v-col cols="12" md="6">
+        <loader v-if="loading" :loading="loading" />
 
-      <template v-else>
-        <v-expansion-panels>
-          <v-expansion-panel v-for="rezept in recipes" :key="rezept.id">
-            <v-expansion-panel-header>{{
-              rezept.recipeName
-            }}</v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <rezept-view :value="rezept" />
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </template>
-    </template>
+        <template v-else>
+          <v-expansion-panels>
+            <v-expansion-panel v-for="rezept in recipes" :key="rezept.id">
+              <v-expansion-panel-header>{{
+                rezept.recipeName
+              }}</v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <rezept-view :value="rezept" />
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </template>
+      </v-col>
+    </v-row>
 
     <template>
       <recipe-form v-model="editRecipe" />

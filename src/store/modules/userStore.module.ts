@@ -22,8 +22,9 @@ export const userStoreStoreModule = {
     },
   },
   actions: {
-    [INIT_USER_ACTION]({ commit }: Action, payload): void {
-      commit(INIT_USER_MUTATION, payload);
+    [INIT_USER_ACTION]({ commit }: Action): void {
+
+      commit(INIT_USER_MUTATION);
     },
   },
   getters: {
