@@ -32,8 +32,7 @@ export const recipeStoreModule = {
   },
   actions: {
     [ACTION_FETCH_RECIPES]({ commit }: Commit): void {
-      const rezepte = RecipeServiceApi.fetchRecipes();
-      commit(MUTATION_INIT_RECIPES, rezepte);
+      RecipeServiceApi.getRecipes().then((foo) => (commit(MUTATION_INIT_RECIPES, foo)));
     },
 
     addRecipe({ commit }: Commit, recipeToAdd): void {
@@ -51,7 +50,7 @@ export default recipeStoreModule;
 
 function toNamespaced(namespace: string): string {
   return `${RECIPE_STORE_MODULE}/${namespace}`;
-};
+}
 export function initRecipes(): string {
   return toNamespaced(ACTION_FETCH_RECIPES);
 }
