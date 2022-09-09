@@ -16,12 +16,12 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const fireBucket = getStorage(firebaseApp);
 const fireAuth = getAuth(firebaseApp);
-const firestore = getFirestore(firebaseApp);
+const db = getFirestore(firebaseApp);
 const getCollection = async () => {
-  const docRef = query(collection(firestore, "recipes"));
+  const docRef = query(collection(db, "recipes"));
   return await getDocs(docRef);
 };
 
-export { fireAuth, fireBucket, firestore, getCollection };
+export { fireAuth, fireBucket, db, getCollection };
 
 export default firebaseApp;

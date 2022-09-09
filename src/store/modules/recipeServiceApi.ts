@@ -1,7 +1,10 @@
-import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
-import { getCollection } from "@/plugins/firebase";
+import Recipe, { recipeConverter } from "@/modules/features/rezeptbuch/types/Recipe";
+import { db, getCollection } from "@/plugins/firebase";
+import { collection, doc, setDoc } from "firebase/firestore";
+import firebase from "firebase/compat";
+import DocumentReference = firebase.firestore.DocumentReference;
 
-export default class {
+export default class RecipeServiceApi {
   public static fetchRecipes(): Recipe[] {
     const data: Recipe[] = [];
     getCollection().then((res) => {
@@ -10,5 +13,17 @@ export default class {
       });
     });
     return data as Recipe[];
+  }
+
+  public static async saveNewRecipe(recipe: Recipe): Promise<any> {
+    try {
+      const ref = doc(collection(db, "test")).withConverter(recipeConverter);
+      console.log("ref = ", ref.id);
+      await setDoc(ref, recipe).then((wert) => {
+        console.log("fertig", wert);
+      });
+    } catch (e) {
+      console.error("error: ", e);
+    }
   }
 }

@@ -78,3 +78,42 @@ export default class Recipe {
     return new Recipe();
   }
 }
+
+export const recipeDescriptionConverter = {
+  toFirestore: (i) => {
+    return {
+      nr: i.nr,
+      img: i.img,
+      text: i.text,
+    };
+  },
+};
+export const ingredientsConverter = {
+  toFirestore: (i) => {
+    return {
+      nr: i.nr,
+      name: i.name,
+      menge: i.menge,
+    };
+  },
+};
+export const recipeConverter = {
+  toFirestore: (recipe) => {
+    return {
+      recipeName: recipe.recipeName,
+      createdBy: recipe.createdBy,
+      ingredients: recipe.ingredients.map((i) =>
+        ingredientsConverter.toFirestore(i)
+      ),
+      recipeDescription: recipe.recipeDescription.map((d) =>
+        recipeDescriptionConverter.toFirestore(d)
+      ),
+    };
+  },
+  fromFirestore: (snapshot, options) => {
+    const recipe = snapshot.data(options);
+    return Recipe.createEmtptyRecipe()
+      .withRecipeName(snapshot.recipeName)
+      .withCreatedBy(snapshot.createdBy);
+  },
+};
