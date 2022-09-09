@@ -5,6 +5,8 @@ export default class RecipeStep {
     this.text = text;
   }
 
+
+
   public static createEmtptyRecipeStep(): RecipeStep {
     return new RecipeStep();
   }
