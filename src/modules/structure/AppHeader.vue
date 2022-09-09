@@ -1,5 +1,5 @@
 <template>
-  <v-row no-gutters style="border-bottom: solid 5px white">
+  <v-row no-gutters style="border-bottom: solid 0px white">
     <v-img
       :src="require('@/assets/textlogo.png')"
       class="logobanner"
@@ -7,7 +7,7 @@
       min-height="400px"
       max-height="500"
     >
-      <v-row justify="center" class="searchBox" no-gutters>
+      <v-row justify="space-around" class="searchBox" no-gutters>
         <v-col cols="11" md="6" class="searchForm">
           <v-form ref="searchForm" @submit.prevent="search">
             <v-text-field
@@ -24,6 +24,7 @@
         </v-col>
       </v-row>
     </v-img>
+    <div style="position: relative; width: 100%; border: 0px solid;"><v-btn style="z-index:2; top:9px; margin-right: 15px; float: right" elevation="4" color="orange" rounded="pill"  large><v-icon>mdi-plus</v-icon></v-btn></div>
   </v-row>
 </template>
 

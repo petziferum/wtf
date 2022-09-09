@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid style="background-color: lightslategrey">
+  <v-container fluid style="background-color: lightblue">
     <v-row justify="center">
       <v-col cols="3">
         <v-toolbar-title> Home</v-toolbar-title>
