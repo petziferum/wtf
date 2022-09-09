@@ -120,10 +120,6 @@ export const recipeConverter = {
   },
   fromFirestore: (snapshot, options) => {
     const recipe = snapshot.data(options);
-    return Recipe.createEmtptyRecipe()
-      .withRecipeName(snapshot.recipeName)
-      .withCreatedBy(snapshot.createdBy)
-      .withIngredients(snapshot.ingredients)
-      .withRecipeDescription(snapshot.recipeDescription);
+    return new Recipe(snapshot.id, recipe.createdBy,recipe.imageSrc,recipe.description, recipe.recipeName, recipe.type, recipe.ingredients,recipe.recipeDescription);
   },
 };

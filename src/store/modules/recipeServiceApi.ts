@@ -1,8 +1,10 @@
-import Recipe, { recipeConverter } from "@/modules/features/rezeptbuch/types/Recipe";
+import Recipe, {
+  recipeConverter,
+} from "@/modules/features/rezeptbuch/types/Recipe";
 import { db, getCollection } from "@/plugins/firebase";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import firebase from "firebase/compat";
-import DocumentReference = firebase.firestore.DocumentReference;
+import QuerySnapshot = firebase.firestore.QuerySnapshot;
 
 export default class RecipeServiceApi {
   public static fetchRecipes(): Recipe[] {
@@ -13,6 +15,15 @@ export default class RecipeServiceApi {
       });
     });
     return data as Recipe[];
+  }
+
+  public static async getRecipes(): Promise<Array<Recipe>> {
+    const c = await getDocs(
+      collection(db, "test").withConverter(recipeConverter)
+    );
+    const a: Recipe[] = [];
+    c.forEach((el) => a.push(el.data()));
+    return a;
   }
 
   public static async saveNewRecipe(recipe: Recipe): Promise<any> {

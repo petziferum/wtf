@@ -5,7 +5,14 @@
         <div class="display-1">Rezept hinzufügen</div>
         <div>
           <v-btn @click="addRecipe">Add</v-btn>
+          <v-btn @click="getCollection">get</v-btn>
         </div>
+        <v-card>
+          <v-card-title>Rezepte</v-card-title>
+          <v-card-text v-for="rezept in rezepte" :key="rezept.id">{{
+            rezept
+          }}</v-card-text>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -20,6 +27,14 @@ import RecipeStep from "@/modules/features/rezeptbuch/types/RecipeStep";
 
 @Component
 export default class AddRecipeView extends Vue {
+  rezepte: Recipe[] = [];
+
+  getCollection(): void {
+    recipeServiceApi.getRecipes().then((recipeArray) => {
+      this.rezepte = recipeArray;
+    });
+  }
+
   addRecipe(): void {
     const r = Recipe.createEmtptyRecipe()
       .withRecipeName("Fette Wurst")
@@ -44,5 +59,3 @@ export default class AddRecipeView extends Vue {
 </script>
 
 <style scoped></style>
-
-Kundennummern Bestelldaten Pakete Maschinenteile
