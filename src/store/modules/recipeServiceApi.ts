@@ -3,8 +3,6 @@ import Recipe, {
 } from "@/modules/features/rezeptbuch/types/Recipe";
 import { db, getCollection } from "@/plugins/firebase";
 import { collection, doc, getDocs, setDoc } from "firebase/firestore";
-import firebase from "firebase/compat";
-import QuerySnapshot = firebase.firestore.QuerySnapshot;
 
 export default class RecipeServiceApi {
   public static fetchRecipes(): Recipe[] {

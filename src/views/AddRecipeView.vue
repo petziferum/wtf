@@ -9,9 +9,19 @@
         </div>
         <v-card>
           <v-card-title>Rezepte</v-card-title>
-          <v-card-text v-for="rezept in rezepte" :key="rezept.id">{{
-            rezept
-          }}</v-card-text>
+          <v-card-text>
+            <v-list three-line>
+              <template v-for="(item,index) in rezepte">
+                <v-list-item :key="index">
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.recipeName }} by {{ item.createdBy }}</v-list-item-title>
+                    <v-list-item-subtitle>{{ item.id }} {{ item.description}}</v-list-item-subtitle>
+                    <v-list-item-subtitle>{{ item.ingredients}}<br>{{ item.recipeDescription }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </template>
+            </v-list>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
