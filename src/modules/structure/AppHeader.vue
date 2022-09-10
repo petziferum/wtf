@@ -24,15 +24,6 @@
         </v-col>
       </v-row>
     </v-img>
-    <div style="position: relative; width: 100%; border: 0px solid">
-      <v-btn
-        style="z-index: 2; top: 9px; margin-right: 15px; float: right"
-        elevation="4"
-        color="orange"
-        large
-        ><v-icon>mdi-plus</v-icon></v-btn
-      >
-    </div>
   </v-row>
 </template>
 

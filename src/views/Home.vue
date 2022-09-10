@@ -4,6 +4,12 @@
       <v-col cols="3">
         <v-toolbar-title> Home</v-toolbar-title>
       </v-col>
+      <v-col>
+        <div style="position: relative; width: 100%; border: 0px solid">
+          <add-recipe-dialog
+          ref="addDialog"/>
+        </div>
+      </v-col>
     </v-row>
 
     <v-row justify="center">
@@ -34,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Ref, Vue } from "vue-property-decorator";
 import HelloWorld from "@/modules/HelloWorld.vue";
 import RezeptView from "@/modules/features/rezeptbuch/RezeptView.vue";
 import Loader from "@/modules/commons/loader.vue";
@@ -46,9 +52,11 @@ import {
   getRecipes,
   initRecipes,
 } from "@/store/modules/recipeStore";
+import AddRecipeDialog from "@/modules/features/rezeptbuch/components/AddRecipeDialog.vue";
 
 @Component({
   components: {
+    AddRecipeDialog,
     RecipeForm,
     Loader,
     RezeptView,
@@ -58,6 +66,8 @@ import {
 export default class Home extends Vue {
   itemList: Zutat[] = [];
   editRecipe: Recipe = Recipe.createEmtptyRecipe();
+
+  @Ref("addDialog")
 
   get loading(): boolean {
     return this.$store.getters[getLoading()];
