@@ -6,8 +6,7 @@
       </v-col>
       <v-col>
         <div style="position: relative; width: 100%; border: 0px solid">
-          <add-recipe-dialog
-          ref="addDialog"/>
+          <add-recipe-dialog ref="addDialog" />
         </div>
       </v-col>
     </v-row>
@@ -68,7 +67,6 @@ export default class Home extends Vue {
   editRecipe: Recipe = Recipe.createEmtptyRecipe();
 
   @Ref("addDialog")
-
   get loading(): boolean {
     return this.$store.getters[getLoading()];
   }

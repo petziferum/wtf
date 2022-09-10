@@ -110,16 +110,21 @@ export const recipeConverter = {
     return {
       recipeName: recipe.recipeName,
       createdBy: recipe.createdBy,
-      ingredients: recipe.ingredients.map((i) =>
-        ingredientsConverter.toFirestore(i)
-      ),
-      recipeDescription: recipe.recipeDescription.map((d) =>
-        recipeDescriptionConverter.toFirestore(d)
-      ),
+      ingredients: recipe.ingredients.map((i) => ingredientsConverter.toFirestore(i)),
+      recipeDescription: recipe.recipeDescription.map((d) => recipeDescriptionConverter.toFirestore(d)),
     };
   },
   fromFirestore: (snapshot, options) => {
     const recipe = snapshot.data(options);
-    return new Recipe(snapshot.id, recipe.createdBy,recipe.imageSrc,recipe.description, recipe.recipeName, recipe.type, recipe.ingredients,recipe.recipeDescription);
+    return new Recipe(
+      snapshot.id,
+      recipe.createdBy,
+      recipe.imageSrc,
+      recipe.description,
+      recipe.recipeName,
+      recipe.type,
+      recipe.ingredients,
+      recipe.recipeDescription
+    );
   },
 };
