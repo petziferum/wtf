@@ -2,7 +2,7 @@
   <v-container>
     <v-row justify="space-around">
       <v-col cols="4">
-        <div class="display-1">Rezept hinzufügen</div>
+        <div class="display-1">Rezept hinzufügen - {{ rezeptId }}</div>
         <div>
           <v-btn @click="addRecipe">Add</v-btn>
           <v-btn @click="getCollection">get</v-btn>
@@ -50,6 +50,7 @@ import RecipeStep from "@/modules/features/rezeptbuch/types/RecipeStep";
 @Component
 export default class AddRecipeView extends Vue {
   rezepte: Recipe[] = [];
+  rezeptId = this.$route.params.id;
 
   getCollection(): void {
     recipeServiceApi.getRecipes().then((recipeArray) => {

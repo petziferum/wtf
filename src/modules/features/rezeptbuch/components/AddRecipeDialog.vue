@@ -46,7 +46,10 @@ export default class AddRecipeDialog extends Vue {
 
   createRecipe(): void {
     if (this.createForm.validate()) {
-      RecipeServiceApi.createNewRecipe(this.newRecipe);
+      RecipeServiceApi.createNewRecipe(this.newRecipe).then((id) => {
+        console.log("id", id);
+        this.$router.push("/add/" + id);
+      });
     }
   }
 }
