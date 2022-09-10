@@ -34,10 +34,12 @@ import recipeServiceApi from "@/store/modules/recipeServiceApi";
 import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
 import Zutat from "@/modules/features/rezeptbuch/types/Zutat";
 import RecipeStep from "@/modules/features/rezeptbuch/types/RecipeStep";
+import recipeStore from "@/store/modules/recipeStore";
 
 @Component
 export default class AddRecipeView extends Vue {
   rezepte: Recipe[] = [];
+
 
   getCollection(): void {
     recipeServiceApi.getRecipes().then((recipeArray) => {

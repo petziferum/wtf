@@ -8,6 +8,7 @@
 
     <v-row justify="center">
       <v-col cols="12" md="6">
+        loading: {{ loading }}
         <loader v-if="loading" :loading="loading" />
 
         <template v-else>
@@ -40,12 +41,10 @@ import Loader from "@/modules/commons/loader.vue";
 import RecipeForm from "@/modules/features/rezeptbuch/components/RecipeForm.vue";
 import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
 import Zutat from "@/modules/features/rezeptbuch/types/Zutat";
-import firebase from "firebase/compat";
-import User = firebase.User;
-import {
+import recipeStore, {
+  getLoading,
   getRecipes,
-  initRecipes,
-  RECIPE_STORE_MODULE,
+  initRecipes
 } from "@/store/modules/recipeStore";
 
 @Component({
@@ -57,9 +56,12 @@ import {
   },
 })
 export default class Home extends Vue {
-  loading = false;
   itemList: Zutat[] = [];
   editRecipe: Recipe = Recipe.createEmtptyRecipe();
+
+  get loading(): boolean {
+    return this.$store.getters[getLoading()];
+  }
 
   get recipes(): Recipe[] {
     return this.$store.getters[getRecipes()];
@@ -70,9 +72,7 @@ export default class Home extends Vue {
   }
 
   loadRezepte(): void {
-    this.loading = true;
     this.$store.dispatch("recipeStore/initiateRecipes").then(() => {
-      this.loading = false;
       this.editRecipe = this.recipes[0];
     });
   }

@@ -1,7 +1,4 @@
 import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
-import Zutat from "@/modules/features/rezeptbuch/types/Zutat";
-import { Ingredient } from "@/modules/features/rezeptbuch/types/Ingredients.type";
-import RecipeStep from "@/modules/features/rezeptbuch/types/RecipeStep";
 import { Commit } from "@/store";
 import RecipeServiceApi from "@/store/modules/recipeServiceApi";
 
@@ -11,6 +8,7 @@ const MUTATION_FETCH_RECIPES = "MUTATION_FETCH_RECIPES";
 const MUTATION_INIT_RECIPES = "INIT_RECIPES";
 const ACTION_FETCH_RECIPES = "ACTION_FETCH_RECIPES";
 const GETTER_RECIPES = "GETTER_RECIPES";
+const GET_LOADING = "GET_LOADING";
 
 export interface Content {
   recipes: Recipe[];
@@ -23,6 +21,9 @@ export const recipeStoreModule = {
     recipes: [],
   } as Content,
   mutations: {
+    MUTATE_LOADING(state: Content, value: boolean): void {
+      state.loading = value;
+    },
     [MUTATION_INIT_RECIPES](state: Content, payload: Recipe[]): void {
       state.recipes = payload;
     },
@@ -34,7 +35,11 @@ export const recipeStoreModule = {
   },
   actions: {
     [ACTION_FETCH_RECIPES]({ commit }: Commit): void {
-      RecipeServiceApi.getRecipes().then((foo) => (commit(MUTATION_INIT_RECIPES, foo)));
+      commit("MUTATE_LOADING", true);
+      RecipeServiceApi.getRecipes().then((foo) => {
+        commit(MUTATION_INIT_RECIPES, foo);
+        setTimeout(()=>commit("MUTATE_LOADING", false), 3000);
+      });
     },
 
     addRecipe({ commit }: Commit, recipeToAdd): void {
@@ -61,4 +66,7 @@ export function initRecipes(): string {
 }
 export function getRecipes(): string {
   return toNamespaced(GETTER_RECIPES);
+}
+export function getLoading(): string {
+  return toNamespaced(GET_LOADING);
 }
