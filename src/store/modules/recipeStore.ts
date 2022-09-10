@@ -14,10 +14,12 @@ const GETTER_RECIPES = "GETTER_RECIPES";
 
 export interface Content {
   recipes: Recipe[];
+  loading: boolean;
 }
 export const recipeStoreModule = {
   namespaced: true,
   state: {
+    loading: false,
     recipes: [],
   } as Content,
   mutations: {
@@ -43,6 +45,9 @@ export const recipeStoreModule = {
     GETTER_RECIPES(state: Content): Recipe[] {
       return state.recipes;
     },
+    GET_LOADING(state: Content): boolean {
+      return state.loading;
+    }
   },
 };
 
