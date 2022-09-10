@@ -41,10 +41,10 @@ import Loader from "@/modules/commons/loader.vue";
 import RecipeForm from "@/modules/features/rezeptbuch/components/RecipeForm.vue";
 import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
 import Zutat from "@/modules/features/rezeptbuch/types/Zutat";
-import recipeStore, {
+import {
   getLoading,
   getRecipes,
-  initRecipes
+  initRecipes,
 } from "@/store/modules/recipeStore";
 
 @Component({

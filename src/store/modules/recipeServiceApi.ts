@@ -24,15 +24,16 @@ export default class RecipeServiceApi {
     return a;
   }
 
-  public static async saveNewRecipe(recipe: Recipe): Promise<any> {
+  public static async saveNewRecipe(recipe: Recipe): Promise<string> {
     try {
       const ref = doc(collection(db, "test")).withConverter(recipeConverter);
       console.log("ref = ", ref.id);
-      await setDoc(ref, recipe).then((wert) => {
-        console.log("fertig", wert);
+      return await setDoc(ref, recipe).then(() => {
+        return ref.id;
       });
     } catch (e) {
       console.error("error: ", e);
+      return "error";
     }
   }
 }

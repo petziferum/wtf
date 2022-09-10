@@ -38,7 +38,7 @@ export const recipeStoreModule = {
       commit("MUTATE_LOADING", true);
       RecipeServiceApi.getRecipes().then((foo) => {
         commit(MUTATION_INIT_RECIPES, foo);
-        setTimeout(()=>commit("MUTATE_LOADING", false), 3000);
+        setTimeout(() => commit("MUTATE_LOADING", false), 3000);
       });
     },
 
@@ -52,7 +52,7 @@ export const recipeStoreModule = {
     },
     GET_LOADING(state: Content): boolean {
       return state.loading;
-    }
+    },
   },
 };
 

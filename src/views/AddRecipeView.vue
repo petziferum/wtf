@@ -8,15 +8,27 @@
           <v-btn @click="getCollection">get</v-btn>
         </div>
         <v-card>
-          <v-card-title>Rezepte</v-card-title>
+          <v-card-title>Rezepte Ansicht</v-card-title>
           <v-card-text>
             <v-list three-line>
-              <template v-for="(item,index) in rezepte">
+              <template v-for="(item, index) in rezepte">
                 <v-list-item :key="index">
                   <v-list-item-content>
-                    <v-list-item-title>{{ item.recipeName }} by {{ item.createdBy }}</v-list-item-title>
-                    <v-list-item-subtitle>{{ item.id }} {{ item.description}}</v-list-item-subtitle>
-                    <v-list-item-subtitle>{{ item.ingredients}}<br>{{ item.recipeDescription }}</v-list-item-subtitle>
+                    <v-list-item-title
+                      >{{ item.recipeName }} by
+                      {{ item.createdBy }}</v-list-item-title
+                    >
+                    <v-list-item-subtitle
+                      >{{ item.id }}
+                      {{ item.description }}</v-list-item-subtitle
+                    >
+                    <v-card>
+                      <v-card-text
+                        >{{ item.ingredients }}<br />{{
+                          item.recipeDescription
+                        }}
+                      </v-card-text>
+                    </v-card>
                   </v-list-item-content>
                 </v-list-item>
               </template>
@@ -34,12 +46,10 @@ import recipeServiceApi from "@/store/modules/recipeServiceApi";
 import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
 import Zutat from "@/modules/features/rezeptbuch/types/Zutat";
 import RecipeStep from "@/modules/features/rezeptbuch/types/RecipeStep";
-import recipeStore from "@/store/modules/recipeStore";
 
 @Component
 export default class AddRecipeView extends Vue {
   rezepte: Recipe[] = [];
-
 
   getCollection(): void {
     recipeServiceApi.getRecipes().then((recipeArray) => {
@@ -64,7 +74,7 @@ export default class AddRecipeView extends Vue {
           ),
       ]);
     recipeServiceApi.saveNewRecipe(r).then((answer) => {
-      console.log("answer", answer);
+      console.info("Rezept hinzugefügt", answer);
     });
   }
 }
