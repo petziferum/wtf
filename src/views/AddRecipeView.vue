@@ -1,38 +1,25 @@
 <template>
   <v-container>
+    <div>
+      <v-btn @click="$router.push('/')">zurück</v-btn>
+    </div>
     <v-row justify="space-around">
       <v-col cols="4">
-        <div class="display-1">Rezept hinzufügen - {{ rezeptId }}</div>
-        <div>
-          <v-btn @click="addRecipe">Add</v-btn>
-          <v-btn @click="getCollection">get</v-btn>
-        </div>
+        <div class="display-1">Rezept bearbeiten</div>
         <v-card>
-          <v-card-title>Rezepte Ansicht</v-card-title>
+          <v-card-title>{{ editRecipe.recipeName }}</v-card-title>
+          <v-card-subtitle>ID: {{ rezeptId }}</v-card-subtitle>
           <v-card-text>
-            <v-list three-line>
-              <template v-for="(item, index) in rezepte">
-                <v-list-item :key="index">
-                  <v-list-item-content>
-                    <v-list-item-title
-                      >{{ item.recipeName }} by
-                      {{ item.createdBy }}</v-list-item-title
-                    >
-                    <v-list-item-subtitle
-                      >{{ item.id }}
-                      {{ item.description }}</v-list-item-subtitle
-                    >
-                    <v-card>
-                      <v-card-text
-                        >{{ item.ingredients }}<br />{{
-                          item.recipeDescription
-                        }}
-                      </v-card-text>
-                    </v-card>
-                  </v-list-item-content>
-                </v-list-item>
-              </template>
-            </v-list>
+            <v-form ref="editrecipeform">
+              <v-text-field
+                label="Name"
+                v-model="editRecipe.recipeName"
+              ></v-text-field>
+              <v-text-field
+                label="createdBy"
+                v-model="editRecipe.createdBy"
+              ></v-text-field>
+            </v-form>
           </v-card-text>
         </v-card>
       </v-col>
@@ -51,6 +38,10 @@ import RecipeStep from "@/modules/features/rezeptbuch/types/RecipeStep";
 export default class AddRecipeView extends Vue {
   rezepte: Recipe[] = [];
   rezeptId = this.$route.params.id;
+
+  get editRecipe(): Recipe {
+    return this.$store.getters["recipeStoreModule/GET_EDIT_RECIPE"];
+  }
 
   getCollection(): void {
     recipeServiceApi.getRecipes().then((recipeArray) => {

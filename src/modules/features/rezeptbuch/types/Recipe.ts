@@ -89,7 +89,7 @@ export const recipeDescriptionConverter = {
   },
   fromFirestore: (snap, o) => {
     const description = snap.data(o);
-    return new RecipeStep(snap.nr, snap.img, snap.text);
+    return new RecipeStep(description.nr, description.img, description.text);
   },
 };
 export const ingredientsConverter = {
@@ -102,7 +102,7 @@ export const ingredientsConverter = {
   },
   fromFirestore: (snap, options) => {
     const ingredient = snap.data(options);
-    return new Zutat(snap.nr, snap.name, snap.menge);
+    return new Zutat(ingredient.nr, ingredient.name, ingredient.menge);
   },
 };
 export const recipeConverter = {
@@ -110,8 +110,12 @@ export const recipeConverter = {
     return {
       recipeName: recipe.recipeName,
       createdBy: recipe.createdBy,
-      ingredients: recipe.ingredients.map((i) => ingredientsConverter.toFirestore(i)),
-      recipeDescription: recipe.recipeDescription.map((d) => recipeDescriptionConverter.toFirestore(d)),
+      ingredients: recipe.ingredients.map((i) =>
+        ingredientsConverter.toFirestore(i)
+      ),
+      recipeDescription: recipe.recipeDescription.map((d) =>
+        recipeDescriptionConverter.toFirestore(d)
+      ),
     };
   },
   fromFirestore: (snapshot, options) => {

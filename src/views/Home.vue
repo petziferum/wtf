@@ -2,7 +2,7 @@
   <v-container fluid style="background-color: lightblue">
     <v-row justify="center">
       <v-col cols="3">
-        <v-toolbar-title> Home</v-toolbar-title>
+        <v-toolbar-title>Home</v-toolbar-title>
       </v-col>
       <v-col>
         <div style="position: relative; width: 100%; border: 0px solid">
@@ -67,6 +67,8 @@ export default class Home extends Vue {
   editRecipe: Recipe = Recipe.createEmtptyRecipe();
 
   @Ref("addDialog")
+  dialog: AddRecipeDialog;
+
   get loading(): boolean {
     return this.$store.getters[getLoading()];
   }

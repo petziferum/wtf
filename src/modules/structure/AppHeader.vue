@@ -1,13 +1,13 @@
 <template>
-  <v-row no-gutters style="border-bottom: solid 0px white">
+  <div>
     <v-img
       :src="require('@/assets/textlogo.png')"
       class="logobanner"
       position="center"
       min-height="400px"
-      max-height="500"
+      max-height="500px"
     >
-      <v-row justify="space-around" class="searchBox" no-gutters>
+      <v-row justify="center" class="searchBox" no-gutters>
         <v-col cols="11" md="6" class="searchForm">
           <v-form ref="searchForm" @submit.prevent="search">
             <v-text-field
@@ -24,7 +24,7 @@
         </v-col>
       </v-row>
     </v-img>
-  </v-row>
+  </div>
 </template>
 
 <script lang="ts">
@@ -46,13 +46,13 @@ export default class Header extends Vue {
 }
 .searchBox {
   position: relative;
-  margin: 10em;
+  margin: 0em;
   width: 100%;
   height: 100%;
 }
 .searchForm {
   position: absolute;
-  bottom: 0;
+  bottom: 0rem;
 }
 .textfield {
   width: 100%;

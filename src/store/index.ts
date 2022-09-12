@@ -18,7 +18,7 @@ export interface CommitAction {
 
 export default new Vuex.Store({
   state: {
-    user: null
+    user: null,
   },
   mutations: {
     SET_USER(state, payload) {
@@ -27,9 +27,9 @@ export default new Vuex.Store({
   },
   actions: {},
   getters: {
-    GET_USER: state => {
+    GET_USER: (state) => {
       return state.user;
-    }
+    },
   },
   modules: {
     recipeStoreModule,

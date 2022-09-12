@@ -1,6 +1,7 @@
 import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
 import { Commit } from "@/store";
 import RecipeServiceApi from "@/store/modules/recipeServiceApi";
+import router from "@/router";
 
 export const RECIPE_STORE_MODULE = "recipeStoreModule";
 
@@ -12,6 +13,7 @@ const GET_LOADING = "GET_LOADING";
 
 export interface Content {
   recipes: Recipe[];
+  editRecipe: Recipe | undefined;
   loading: boolean;
 }
 export const recipeStoreModule = {
@@ -19,6 +21,7 @@ export const recipeStoreModule = {
   state: {
     loading: false,
     recipes: [],
+    editRecipe: undefined,
   } as Content,
   mutations: {
     MUTATE_LOADING(state: Content, value: boolean): void {
@@ -32,6 +35,10 @@ export const recipeStoreModule = {
       state.recipes.push(payload);
       console.log("added", payload, state.recipes);
     },
+
+    ADD_EDIT_RECIPE(state: Content, payload: Recipe): void {
+      state.editRecipe = payload;
+    },
   },
   actions: {
     [ACTION_FETCH_RECIPES]({ commit }: Commit): void {
@@ -42,6 +49,15 @@ export const recipeStoreModule = {
       });
     },
 
+    CREATE_NEW_RECIPE({ commit }: Commit, newRecipe: Recipe): void {
+      RecipeServiceApi.createNewRecipe(newRecipe).then((id) => {
+        newRecipe.withId(id);
+        console.log("id", id, "editRecipe", newRecipe);
+        commit("ADD_EDIT_RECIPE", newRecipe);
+        router.push("/add/" + id);
+      });
+    },
+
     addRecipe({ commit }: Commit, recipeToAdd): void {
       console.log("add");
     },
@@ -49,6 +65,9 @@ export const recipeStoreModule = {
   getters: {
     GETTER_RECIPES(state: Content): Recipe[] {
       return state.recipes;
+    },
+    GET_EDIT_RECIPE(state: Content): Recipe | undefined {
+      return state.editRecipe;
     },
     GET_LOADING(state: Content): boolean {
       return state.loading;

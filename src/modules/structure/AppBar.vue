@@ -12,7 +12,9 @@
     </div>
 
     <v-spacer></v-spacer>
-    Hallo {{ user.email }}
+    Hallo&nbsp;
+    <div v-if="user">{{ user.email }}</div>
+    <div v-else>Error 404 <v-btn @click="login">login</v-btn></div>
     <v-spacer />
     <v-btn href="https://recipes-petzi.web.app" target="_blank" text>
       <span class="mr-2">Food Tinder</span>
@@ -25,9 +27,23 @@
 import { Component, Vue } from "vue-property-decorator";
 import firebase from "firebase/compat";
 import User = firebase.User;
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 @Component
 export default class AppBar extends Vue {
+  loading = false;
+
+  login(): void {
+    this.loading = true;
+    const email = "petziferum@gmail.com";
+    const pass = "P3tzif3rum";
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, pass) //user daboarderpjb@gmail.com pass: asdfasdf
+      .then((user) => {
+        console.log("Anmeldung user: ", user.user);
+        this.$store.state.user = user.user;
+      });
+  }
 
   get user(): User {
     return this.$store.getters["GET_USER"];

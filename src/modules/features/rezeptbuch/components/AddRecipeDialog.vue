@@ -33,7 +33,6 @@
 <script lang="ts">
 import { Component, Ref, Vue } from "vue-property-decorator";
 import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
-import RecipeServiceApi from "@/store/modules/recipeServiceApi";
 
 @Component
 export default class AddRecipeDialog extends Vue {
@@ -46,10 +45,10 @@ export default class AddRecipeDialog extends Vue {
 
   createRecipe(): void {
     if (this.createForm.validate()) {
-      RecipeServiceApi.createNewRecipe(this.newRecipe).then((id) => {
-        console.log("id", id);
-        this.$router.push("/add/" + id);
-      });
+      this.$store.dispatch(
+        "recipeStoreModule/CREATE_NEW_RECIPE",
+        this.newRecipe
+      );
     }
   }
 }
