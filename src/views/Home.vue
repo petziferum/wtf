@@ -13,20 +13,39 @@
 
     <v-row justify="center">
       <v-col cols="12" md="6">
-        loading: {{ loading }}
+        loading: {{ loading }}<br>
+        view: {{ view }} <v-btn small @click="switchoffAll">off</v-btn>
         <loader v-if="loading" :loading="loading" />
 
         <template v-else>
+          <!--
           <v-expansion-panels>
-            <v-expansion-panel v-for="rezept in recipes" :key="rezept.id">
-              <v-expansion-panel-header>{{
-                rezept.recipeName
-              }}</v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <rezept-view :value="rezept" />
-              </v-expansion-panel-content>
-            </v-expansion-panel>
+              <v-expansion-panel v-for="rezept in recipes" :key="rezept.id">
+                <v-expansion-panel-header>{{
+                  rezept.recipeName
+                }}</v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <rezept-view :value="rezept" />
+                </v-expansion-panel-content>
+              </v-expansion-panel>
           </v-expansion-panels>
+          -->
+
+          <v-lazy
+            v-model="view[i]"
+            :options="{
+          threshold: 1
+        }"
+            min-height="200"
+            transition="fab-transition"
+            v-for="(rezept, i) in recipes"
+            :key="rezept.id"
+          >
+            <div>
+            <v-btn @click="switchoff(i)">off</v-btn>
+                <rezept-view :value="rezept" />
+            </div>
+          </v-lazy>
         </template>
       </v-col>
     </v-row>
@@ -63,8 +82,10 @@ import AddRecipeDialog from "@/modules/features/rezeptbuch/components/AddRecipeD
   },
 })
 export default class Home extends Vue {
+
   itemList: Zutat[] = [];
   editRecipe: Recipe = Recipe.createEmtptyRecipe();
+  view: [boolean] = [false];
 
   @Ref("addDialog")
   dialog: AddRecipeDialog;
@@ -77,8 +98,29 @@ export default class Home extends Vue {
     return this.$store.getters[getRecipes()];
   }
 
+  switchoff(nr: number): void {
+    console.info("click off", nr);
+    this.$set(this.view, nr, false)
+  }
+
+  switchoffAll(): void {
+    for(const i in this.view) {
+      console.info("value", this.view[i])
+      if(this.view[i]){
+        this.$set(this.view, i, false);
+        console.info("new value", this.view[i]);
+      }
+    }
+  }
+
   fetch(): void {
     this.$store.dispatch(initRecipes());
+    if(this.recipes) {
+      console.info("länge", this.recipes.length);
+      for(const i in this.recipes) {
+        this.view[i] = false;
+      }
+    }
   }
 
   loadRezepte(): void {

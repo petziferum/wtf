@@ -1,6 +1,4 @@
 <template>
-  <v-row justify="center">
-    <v-col cols="12" md="12">
       <v-card>
         <v-card-title
           >{{ rezept.recipeName }}
@@ -41,8 +39,6 @@
           </v-col>
         </v-row>
       </v-card>
-    </v-col>
-  </v-row>
 </template>
 
 <script lang="ts">
