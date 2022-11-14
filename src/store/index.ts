@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex, { CommitOptions, Payload } from "vuex";
 import recipeStoreModule from "@/store/modules/recipeStore";
+import userStoreModule from "@/store/modules/userStore.module";
 
 Vue.use(Vuex);
 
@@ -18,20 +19,13 @@ export interface CommitAction {
 
 export default new Vuex.Store({
   state: {
-    user: null,
-  },
-  mutations: {
-    SET_USER(state, payload) {
-      state.user = payload;
-    },
-  },
+    loading: false,
+  } as Rootstate,
+  mutations: {},
   actions: {},
-  getters: {
-    GET_USER: (state) => {
-      return state.user;
-    },
-  },
+  getters: {},
   modules: {
     recipeStoreModule,
+    userStoreModule,
   },
 });

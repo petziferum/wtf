@@ -13,7 +13,7 @@
 
     <v-row justify="center">
       <v-col cols="12" md="6">
-        loading: {{ loading }}<br>
+        loading: {{ loading }}<br />
         view: {{ view }} <v-btn small @click="switchoffAll">off</v-btn>
         <loader v-if="loading" :loading="loading" />
 
@@ -34,16 +34,16 @@
           <v-lazy
             v-model="view[i]"
             :options="{
-          threshold: 1
-        }"
+              threshold: 1,
+            }"
             min-height="200"
             transition="fab-transition"
             v-for="(rezept, i) in recipes"
             :key="rezept.id"
           >
             <div>
-            <v-btn @click="switchoff(i)">off</v-btn>
-                <rezept-view :value="rezept" />
+              <v-btn @click="switchoff(i)">off</v-btn>
+              <rezept-view :value="rezept" />
             </div>
           </v-lazy>
         </template>
@@ -82,7 +82,6 @@ import AddRecipeDialog from "@/modules/features/rezeptbuch/components/AddRecipeD
   },
 })
 export default class Home extends Vue {
-
   itemList: Zutat[] = [];
   editRecipe: Recipe = Recipe.createEmtptyRecipe();
   view: [boolean] = [false];
@@ -100,13 +99,13 @@ export default class Home extends Vue {
 
   switchoff(nr: number): void {
     console.info("click off", nr);
-    this.$set(this.view, nr, false)
+    this.$set(this.view, nr, false);
   }
 
   switchoffAll(): void {
-    for(const i in this.view) {
-      console.info("value", this.view[i])
-      if(this.view[i]){
+    for (const i in this.view) {
+      console.info("value", this.view[i]);
+      if (this.view[i]) {
         this.$set(this.view, i, false);
         console.info("new value", this.view[i]);
       }
@@ -115,9 +114,9 @@ export default class Home extends Vue {
 
   fetch(): void {
     this.$store.dispatch(initRecipes());
-    if(this.recipes) {
+    if (this.recipes) {
       console.info("länge", this.recipes.length);
-      for(const i in this.recipes) {
+      for (const i in this.recipes) {
         this.view[i] = false;
       }
     }

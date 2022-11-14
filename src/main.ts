@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 import vuetify from "@/plugins/vuetify";
 import { fireAuth } from "@/plugins/firebase";
+import { loginUser } from "@/store/modules/userStore.module";
 
 Vue.config.productionTip = false;
 
@@ -16,7 +17,7 @@ fireAuth.onAuthStateChanged((user) => {
       vuetify,
       render: (h) => h(App),
       created() {
-        this.$store.commit("SET_USER", user);
+        this.$store.dispatch(loginUser(), user?.uid);
       },
     }).$mount("#app");
   }

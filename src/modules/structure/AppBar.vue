@@ -27,7 +27,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import firebase from "firebase/compat";
 import User = firebase.User;
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getUser, loginUser, userStoreModule } from "@/store/modules/userStore.module";
 
 @Component
 export default class AppBar extends Vue {
@@ -36,17 +36,12 @@ export default class AppBar extends Vue {
   login(): void {
     this.loading = true;
     const email = "petziferum@gmail.com";
-    const pass = "P3tzif3rum";
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, pass) //user daboarderpjb@gmail.com pass: asdfasdf
-      .then((user) => {
-        console.log("Anmeldung user: ", user.user);
-        this.$store.state.user = user.user;
-      });
+    const pass = "testtest";
+    this.$store.dispatch(loginUser());
   }
 
   get user(): User {
-    return this.$store.getters["GET_USER"];
+    return this.$store.getters[getUser()];
   }
 }
 </script>
