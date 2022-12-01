@@ -9,6 +9,7 @@ const MUTATION_FETCH_RECIPES = "MUTATION_FETCH_RECIPES";
 const MUTATION_INIT_RECIPES = "INIT_RECIPES";
 const ACTION_FETCH_RECIPES = "ACTION_FETCH_RECIPES";
 const GETTER_RECIPES = "GETTER_RECIPES";
+const SAVE_RECIPE_TO_DB = "SAVE_RECIPE_TO_DB"
 const GET_LOADING = "GET_LOADING";
 
 export interface Content {
@@ -23,6 +24,7 @@ export const recipeStoreModule = {
     recipes: [],
     editRecipe: undefined,
   } as Content,
+
   mutations: {
     MUTATE_LOADING(state: Content, value: boolean): void {
       state.loading = value;
@@ -40,16 +42,22 @@ export const recipeStoreModule = {
       state.editRecipe = payload;
     },
   },
+
   actions: {
     [ACTION_FETCH_RECIPES]({ commit }: Commit): void {
       commit("MUTATE_LOADING", true);
       RecipeServiceApi.getRecipes().then((foo) => {
         commit(MUTATION_INIT_RECIPES, foo);
-        setTimeout(() => commit("MUTATE_LOADING", false), 3000);
+        setTimeout(() => commit("MUTATE_LOADING", false), 1000);
       });
     },
 
-    CREATE_NEW_RECIPE({ commit }: Commit, newRecipe: Recipe): void {
+    CREATE_NEW_RECIPE({commit}: Commit, editRecipe: Recipe): void {
+      commit("MUTATE_LOADING", true);
+      commit("ADD_EDIT_RECIPE", editRecipe);
+    },
+
+    [SAVE_RECIPE_TO_DB]({ commit }: Commit, newRecipe: Recipe): void {
       RecipeServiceApi.createNewRecipe(newRecipe).then((id) => {
         newRecipe.withId(id);
         console.log("id", id, "editRecipe", newRecipe);
@@ -62,6 +70,7 @@ export const recipeStoreModule = {
       console.log("add");
     },
   },
+
   getters: {
     GETTER_RECIPES(state: Content): Recipe[] {
       return state.recipes;

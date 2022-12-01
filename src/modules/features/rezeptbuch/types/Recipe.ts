@@ -10,7 +10,8 @@ export default class Recipe {
     public recipeName?: string,
     public type?: string,
     public ingredients?: Zutat[],
-    public recipeDescription?: RecipeStep[]
+    public recipeDescription?: RecipeStep[],
+    public active?: boolean
   ) {
     this.id = id;
     this.createdBy = createdBy;
@@ -19,6 +20,7 @@ export default class Recipe {
     this.type = type;
     this.ingredients = ingredients;
     this.recipeDescription = recipeDescription;
+    this.active = active;
   }
 
   withId(value: string): Recipe {
@@ -60,6 +62,19 @@ export default class Recipe {
     return this;
   }
 
+  withActive(value: boolean): Recipe {
+          this.active = value;
+          return this;
+  }
+
+  setActive(): void {
+    this.active = true;
+  }
+
+  setInactiv(): void {
+    this.active = false;
+  }
+
   addIngredient(value: Zutat): Recipe {
     this.ingredients
       ? this.ingredients.push(value)
@@ -73,6 +88,7 @@ export default class Recipe {
       : (this.recipeDescription = [value]);
     return this;
   }
+
 
   public static createEmtptyRecipe(): Recipe {
     return new Recipe();

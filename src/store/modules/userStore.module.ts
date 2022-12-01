@@ -21,6 +21,7 @@ export const userStoreModule = {
     prop: "",
     user: null,
   } as userStoreModuleState,
+
   mutations: {
     [GET_USER_ACCOUNT_MUTATION](
       state: userStoreModuleState,
@@ -30,11 +31,12 @@ export const userStoreModule = {
       console.info("user im State", payload);
     },
   },
+
   actions: {
     async [LOGIN_USER_ACTION]({ commit }: Action, user: string): Promise<void> {
       console.log("übergeben", user);
       let id = "";
-      if(!user) {
+      if (!user) {
         const id = await UserServiceApi.userLogin(
           "petziferum@gmail.com",
           "testtest"
@@ -44,15 +46,15 @@ export const userStoreModule = {
       } else {
         id = user;
       }
-        if (id) {
-          const user = await UserServiceApi.getUserAccount(id).then((res) => {
-            return res;
-          });
-          console.log("user account: ", user);
-          commit(GET_USER_ACCOUNT_MUTATION, user);
-        } else {
-          console.log("Keine id!");
-        }
+      if (id) {
+        const user = await UserServiceApi.getUserAccount(id).then((res) => {
+          return res;
+        });
+        console.log("user account: ", user);
+        commit(GET_USER_ACCOUNT_MUTATION, user);
+      } else {
+        console.log("Keine id!");
+      }
     },
 
     [GET_USER_ACCOUNT]({ commit }: Action, user): void {
@@ -65,6 +67,7 @@ export const userStoreModule = {
     },
   },
 };
+
 export default userStoreModule;
 
 function toNamespaced(namespace: string): string {

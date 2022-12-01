@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "@/views/Home.vue";
 import Add from "@/views/AddRecipeView.vue";
+import UserDashboard from "@/modules/features/user/UserDashboard.vue";
 
 Vue.use(VueRouter);
 
@@ -14,10 +15,12 @@ const routes: Array<RouteConfig> = [
   {
     path: "/add/:id",
     name: "AddRecipe",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: Add,
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: UserDashboard,
   },
 ];
 

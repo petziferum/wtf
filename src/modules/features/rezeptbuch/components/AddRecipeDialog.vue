@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="isOpen" width="30%">
+  <v-dialog v-model="isOpen">
     <template v-slot:activator="{ on }">
       <v-btn
         style="z-index: 2; top: 9px; margin-right: 15px; float: right"
@@ -11,7 +11,7 @@
       >
     </template>
     <v-card>
-      <v-card-title>Wie heißt das Gericht?</v-card-title>
+      <v-card-title>Möchtest du ein neues Rezept erstellen?</v-card-title>
       <v-form ref="createRecipeForm">
         <v-card-text>
           <v-text-field
@@ -22,8 +22,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn text color="red">abbrechen</v-btn>
-          <v-btn text color="green" @click="createRecipe">anlegen</v-btn>
+          <v-btn text color="red" @click="cancel">abbrechen</v-btn>
+          <v-btn text color="green" @click="createRecipe">weiter</v-btn>
         </v-card-actions>
       </v-form>
     </v-card>
@@ -48,8 +48,13 @@ export default class AddRecipeDialog extends Vue {
       this.$store.dispatch(
         "recipeStoreModule/CREATE_NEW_RECIPE",
         this.newRecipe
-      );
+      ).then(()=> this.$router.push("/add/1"));
     }
+  }
+
+  cancel(): void {
+    this.newRecipe = Recipe.createEmtptyRecipe()
+    this.isOpen = false;
   }
 }
 </script>

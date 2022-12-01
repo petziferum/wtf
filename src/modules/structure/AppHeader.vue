@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="border:1px solid; margin: 0;">
     <v-img
       :src="require('@/assets/textlogo.png')"
       class="logobanner"

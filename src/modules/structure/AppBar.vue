@@ -7,13 +7,16 @@
         contain
         :src="require('@/assets/logo.png')"
         transition="scale-transition"
-        width="140"
+        width="120"
       />
     </div>
 
     <v-spacer></v-spacer>
-    Hallo&nbsp;
-    <div v-if="user">{{ user.email }}</div>
+    <div v-if="user">
+      <v-btn text to="/dashboard">
+        <v-icon>mdi-clipboard-outline</v-icon>
+      </v-btn>
+    </div>
     <div v-else>Error 404 <v-btn @click="login">login</v-btn></div>
     <v-spacer />
     <v-btn href="https://recipes-petzi.web.app" target="_blank" text>
@@ -27,7 +30,11 @@
 import { Component, Vue } from "vue-property-decorator";
 import firebase from "firebase/compat";
 import User = firebase.User;
-import { getUser, loginUser, userStoreModule } from "@/store/modules/userStore.module";
+import {
+  getUser,
+  loginUser,
+  userStoreModule,
+} from "@/store/modules/userStore.module";
 
 @Component
 export default class AppBar extends Vue {

@@ -4,8 +4,8 @@
       <v-btn @click="$router.push('/')">zurück</v-btn>
     </div>
     <v-row justify="space-around">
-      <v-col cols="4">
-        <div class="display-1">Rezept bearbeiten</div>
+      <v-col cols="12">
+        <div class="display-1">Rezept {{ editRecipe.recipeName }} bearbeiten</div>
         <v-card>
           <v-card-title>{{ editRecipe.recipeName }}</v-card-title>
           <v-card-subtitle>ID: {{ rezeptId }}</v-card-subtitle>

@@ -59,6 +59,6 @@ export default class User {
   }
 
   public static createEmtptyUser(): User {
-  return new User();
+    return new User();
   }
 }

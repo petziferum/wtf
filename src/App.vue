@@ -2,7 +2,7 @@
   <v-app>
     <app-bar />
     <app-header />
-    <v-main>
+    <v-main style="padding: 0;">
       <router-view> </router-view>
     </v-main>
   </v-app>
