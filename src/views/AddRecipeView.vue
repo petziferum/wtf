@@ -8,7 +8,7 @@
         <div class="display-1">Rezept {{ editRecipe.recipeName }} bearbeiten</div>
         <v-card>
           <v-card-title>{{ editRecipe.recipeName }}</v-card-title>
-          <v-card-subtitle>ID: {{ rezeptId }}</v-card-subtitle>
+          <v-card-subtitle>ID: {{ rezeptId }}, User Id: {{ editRecipe.createdBy}}</v-card-subtitle>
           <v-card-text>
             <v-form ref="editrecipeform">
               <v-text-field

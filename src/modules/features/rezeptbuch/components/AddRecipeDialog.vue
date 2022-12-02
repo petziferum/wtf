@@ -12,6 +12,7 @@
     </template>
     <v-card>
       <v-card-title>Möchtest du ein neues Rezept erstellen?</v-card-title>
+      <v-card-subtitle>{{ user.id }}</v-card-subtitle>
       <v-form ref="createRecipeForm">
         <v-card-text>
           <v-text-field
@@ -33,22 +34,29 @@
 <script lang="ts">
 import { Component, Ref, Vue } from "vue-property-decorator";
 import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
+import { getEditRecipe } from "@/store/modules/recipeStore";
+import { getUser } from "@/store/modules/userStore.module";
+import User from "@/modules/features/user/types/User";
 
 @Component
 export default class AddRecipeDialog extends Vue {
   isOpen = false;
-  newRecipe = Recipe.createEmtptyRecipe();
+  newRecipe = Recipe.createEmtptyRecipe().withCreatedBy(this.$store.getters[getUser()].id);
   filledRule = [(v) => v != null || "Name muss ausgefüllt sein"];
 
   @Ref("createRecipeForm")
   createForm: HTMLFormElement;
+
+  get user(): User {
+    return this.$store.getters[getUser()]
+  }
 
   createRecipe(): void {
     if (this.createForm.validate()) {
       this.$store.dispatch(
         "recipeStoreModule/CREATE_NEW_RECIPE",
         this.newRecipe
-      ).then(()=> this.$router.push("/add/1"));
+      );
     }
   }
 

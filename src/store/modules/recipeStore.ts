@@ -9,7 +9,8 @@ const MUTATION_FETCH_RECIPES = "MUTATION_FETCH_RECIPES";
 const MUTATION_INIT_RECIPES = "INIT_RECIPES";
 const ACTION_FETCH_RECIPES = "ACTION_FETCH_RECIPES";
 const GETTER_RECIPES = "GETTER_RECIPES";
-const SAVE_RECIPE_TO_DB = "SAVE_RECIPE_TO_DB"
+const GET_EDITRECIPE = "GET_EDITRECIPE";
+const SAVE_RECIPE_TO_DB = "SAVE_RECIPE_TO_DB";
 const GET_LOADING = "GET_LOADING";
 
 export interface Content {
@@ -52,9 +53,22 @@ export const recipeStoreModule = {
       });
     },
 
-    CREATE_NEW_RECIPE({commit}: Commit, editRecipe: Recipe): void {
+    CREATE_NEW_RECIPE(
+      { commit }: Commit,
+      editRecipe: Recipe
+    ): Promise<Recipe | void> {
       commit("MUTATE_LOADING", true);
-      commit("ADD_EDIT_RECIPE", editRecipe);
+      return RecipeServiceApi.createNewRecipe(editRecipe)
+        .then((id) => {
+          editRecipe.id = id;
+          commit("ADD_EDIT_RECIPE", editRecipe);
+          console.info("rezept angelegt: ", editRecipe);
+          return editRecipe;
+        })
+        .then(() => {
+          commit("MUTATE_LOADING", false)
+          router.push("/add/"+editRecipe.id);
+        });
     },
 
     [SAVE_RECIPE_TO_DB]({ commit }: Commit, newRecipe: Recipe): void {
@@ -94,6 +108,9 @@ export function initRecipes(): string {
 }
 export function getRecipes(): string {
   return toNamespaced(GETTER_RECIPES);
+}
+export function getEditRecipe(): string {
+  return toNamespaced(GET_EDITRECIPE);
 }
 export function getLoading(): string {
   return toNamespaced(GET_LOADING);
