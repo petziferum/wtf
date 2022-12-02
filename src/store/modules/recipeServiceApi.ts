@@ -25,6 +25,7 @@ export default class RecipeServiceApi {
   }
 
   public static async saveNewRecipe(recipe: Recipe): Promise<string> {
+    //const recipeDbObject = recipeConverter.toFirestore(recipe);
     try {
       const ref = doc(collection(db, "test")).withConverter(recipeConverter);
       console.log("ref = ", ref.id);
@@ -44,7 +45,8 @@ export default class RecipeServiceApi {
 
     const saveObject = {
       recipeName: recipe.recipeName,
-      createdBy: recipe.createdBy
+      createdBy: recipe.createdBy,
+      active: recipe.active
     }
 
     try {

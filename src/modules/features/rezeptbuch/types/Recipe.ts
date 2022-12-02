@@ -67,12 +67,8 @@ export default class Recipe {
           return this;
   }
 
-  setActive(): void {
+  setActive(): void{
     this.active = true;
-  }
-
-  setInactiv(): void {
-    this.active = false;
   }
 
   addIngredient(value: Zutat): Recipe {
@@ -126,6 +122,7 @@ export const recipeConverter = {
     return {
       recipeName: recipe.recipeName,
       createdBy: recipe.createdBy,
+      active: recipe.active,
       ingredients: recipe.ingredients.map((i) =>
         ingredientsConverter.toFirestore(i)
       ),

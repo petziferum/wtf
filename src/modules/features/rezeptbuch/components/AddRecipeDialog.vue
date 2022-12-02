@@ -41,14 +41,16 @@ import User from "@/modules/features/user/types/User";
 @Component
 export default class AddRecipeDialog extends Vue {
   isOpen = false;
-  newRecipe = Recipe.createEmtptyRecipe().withCreatedBy(this.user.id);
+  newRecipe = Recipe.createEmtptyRecipe()
+    .withCreatedBy(this.user.id)
+    .withActive(false);
   filledRule = [(v) => v != null || "Name muss ausgefüllt sein"];
 
   @Ref("createRecipeForm")
   createForm: HTMLFormElement;
 
   get user(): User {
-    return this.$store.getters[getUser()]
+    return this.$store.getters[getUser()];
   }
 
   createRecipe(): void {
@@ -61,8 +63,14 @@ export default class AddRecipeDialog extends Vue {
   }
 
   cancel(): void {
-    this.newRecipe = Recipe.createEmtptyRecipe()
+    this.newRecipe = Recipe.createEmtptyRecipe();
     this.isOpen = false;
+  }
+
+  beforeMount(): void {
+    this.newRecipe = Recipe.createEmtptyRecipe()
+      .withCreatedBy(this.user.id)
+      .withActive(false);
   }
 }
 </script>

@@ -1,4 +1,4 @@
-import Recipe from "@/modules/features/rezeptbuch/types/Recipe";
+import Recipe, { recipeConverter } from "@/modules/features/rezeptbuch/types/Recipe";
 import { Commit } from "@/store";
 import RecipeServiceApi from "@/store/modules/recipeServiceApi";
 import router from "@/router";
@@ -10,6 +10,7 @@ const MUTATION_INIT_RECIPES = "INIT_RECIPES";
 const ACTION_FETCH_RECIPES = "ACTION_FETCH_RECIPES";
 const GETTER_RECIPES = "GETTER_RECIPES";
 const GET_EDITRECIPE = "GET_EDITRECIPE";
+const CREATE_NEW_RECIPE = "CREATE_NEW_RECIPE";
 const SAVE_RECIPE_TO_DB = "SAVE_RECIPE_TO_DB";
 const GET_LOADING = "GET_LOADING";
 
@@ -53,7 +54,7 @@ export const recipeStoreModule = {
       });
     },
 
-    CREATE_NEW_RECIPE(
+    [CREATE_NEW_RECIPE](
       { commit }: Commit,
       editRecipe: Recipe
     ): Promise<Recipe | void> {
