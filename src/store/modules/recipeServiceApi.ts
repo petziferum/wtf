@@ -38,21 +38,11 @@ export default class RecipeServiceApi {
     }
   }
 
-  public static async createNewRecipe(recipe: Recipe): Promise<string> {
-    const createRecipeName = {
-      recipeName: recipe.recipeName,
-    };
-
-    const saveObject = {
-      recipeName: recipe.recipeName,
-      createdBy: recipe.createdBy,
-      active: recipe.active
-    }
-
+  public static async createNewEditRecipe(recipe: Recipe): Promise<string> {
     try {
-      const ref = doc(collection(db, "test"));
-      return await setDoc(ref, saveObject).then(() => {
-        console.log("rezept erstellt in 'test' mit id: ", ref.id);
+      const ref = doc(collection(db, "test")).withConverter(recipeConverter);
+      console.log("ref = ", ref.id);
+      return await setDoc(ref, recipe).then(() => {
         return ref.id;
       });
     } catch (e) {

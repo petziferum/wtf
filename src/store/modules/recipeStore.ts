@@ -60,7 +60,7 @@ export const recipeStoreModule = {
     ): Promise<Recipe | void> {
       commit("MUTATE_LOADING", true);
       console.log("save editRecipe", editRecipe);
-      return RecipeServiceApi.createNewRecipe(editRecipe)
+      return RecipeServiceApi.createNewEditRecipe(editRecipe)
         .then((id) => {
           editRecipe.id = id;
           commit("ADD_EDIT_RECIPE", editRecipe);
@@ -74,7 +74,7 @@ export const recipeStoreModule = {
     },
 
     [SAVE_RECIPE_TO_DB]({ commit }: Commit, newRecipe: Recipe): void {
-      RecipeServiceApi.createNewRecipe(newRecipe).then((id) => {
+      RecipeServiceApi.saveNewRecipe(newRecipe).then((id) => {
         newRecipe.withId(id);
         console.log("id", id, "editRecipe", newRecipe);
         commit("ADD_EDIT_RECIPE", newRecipe);

@@ -63,11 +63,11 @@ export default class Recipe {
   }
 
   withActive(value: boolean): Recipe {
-          this.active = value;
-          return this;
+    this.active = value;
+    return this;
   }
 
-  setActive(): void{
+  setActive(): void {
     this.active = true;
   }
 
@@ -85,50 +85,44 @@ export default class Recipe {
     return this;
   }
 
-
   public static createEmtptyRecipe(): Recipe {
     return new Recipe();
   }
 }
 
-export const recipeDescriptionConverter = {
-  toFirestore: (i) => {
-    return {
-      nr: i.nr,
-      img: i.img,
-      text: i.text,
-    };
-  },
-  fromFirestore: (snap, o) => {
-    const description = snap.data(o);
-    return new RecipeStep(description.nr, description.img, description.text);
-  },
-};
-export const ingredientsConverter = {
-  toFirestore: (i) => {
+function ingredientsConverter(i)  {
+  if (i) {
     return {
       nr: i.nr,
       name: i.name,
       menge: i.menge,
     };
-  },
-  fromFirestore: (snap, options) => {
-    const ingredient = snap.data(options);
-    return new Zutat(ingredient.nr, ingredient.name, ingredient.menge);
-  },
+  } else {
+    return null;
+  }
 };
+
+function descriptionConverter(d)  {
+  if (d) {
+    return {
+      nr: d.nr,
+      img: d.img,
+      text: d.text,
+    };
+  } else {
+    return null;
+  }
+};
+
 export const recipeConverter = {
   toFirestore: (recipe) => {
+    console.log("firestore converter gestartet", recipe);
     return {
       recipeName: recipe.recipeName,
       createdBy: recipe.createdBy,
       active: recipe.active,
-      ingredients: recipe.ingredients.map((i) =>
-        ingredientsConverter.toFirestore(i)
-      ),
-      recipeDescription: recipe.recipeDescription.map((d) =>
-        recipeDescriptionConverter.toFirestore(d)
-      ),
+      ingredients: ingredientsConverter(recipe.ingredients),
+      recipeDescription: descriptionConverter(recipe.recipeDescription)
     };
   },
   fromFirestore: (snapshot, options) => {
