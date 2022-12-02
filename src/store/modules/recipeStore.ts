@@ -58,6 +58,7 @@ export const recipeStoreModule = {
       editRecipe: Recipe
     ): Promise<Recipe | void> {
       commit("MUTATE_LOADING", true);
+      console.log("save editRecipe", editRecipe);
       return RecipeServiceApi.createNewRecipe(editRecipe)
         .then((id) => {
           editRecipe.id = id;

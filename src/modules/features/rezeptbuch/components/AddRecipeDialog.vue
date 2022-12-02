@@ -41,7 +41,7 @@ import User from "@/modules/features/user/types/User";
 @Component
 export default class AddRecipeDialog extends Vue {
   isOpen = false;
-  newRecipe = Recipe.createEmtptyRecipe().withCreatedBy(this.$store.getters[getUser()].id);
+  newRecipe = Recipe.createEmtptyRecipe().withCreatedBy(this.user.id);
   filledRule = [(v) => v != null || "Name muss ausgefüllt sein"];
 
   @Ref("createRecipeForm")

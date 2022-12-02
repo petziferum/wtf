@@ -42,9 +42,14 @@ export default class RecipeServiceApi {
       recipeName: recipe.recipeName,
     };
 
+    const saveObject = {
+      recipeName: recipe.recipeName,
+      createdBy: recipe.createdBy
+    }
+
     try {
       const ref = doc(collection(db, "test"));
-      return await setDoc(ref, createRecipeName).then(() => {
+      return await setDoc(ref, saveObject).then(() => {
         console.log("rezept erstellt in 'test' mit id: ", ref.id);
         return ref.id;
       });
