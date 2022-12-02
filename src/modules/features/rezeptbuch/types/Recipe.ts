@@ -135,7 +135,8 @@ export const recipeConverter = {
       recipe.recipeName,
       recipe.type,
       recipe.ingredients,
-      recipe.recipeDescription
+      recipe.recipeDescription,
+      recipe.imageSrc
     );
   },
 };

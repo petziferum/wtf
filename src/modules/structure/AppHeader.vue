@@ -1,7 +1,7 @@
 <template>
   <div style="border:1px solid; margin: 0;">
     <v-img
-      :src="require('@/assets/textlogo.png')"
+      :src="require('@/assets/logo.png')"
       class="logobanner"
       position="center"
       min-height="400px"
