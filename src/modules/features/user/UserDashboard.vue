@@ -19,6 +19,12 @@
     </v-col>
   </v-row>
   <v-row>
+    <v-col cols="10">
+      <v-card>
+        <v-card-title>User Rezepte <v-btn @click="getUserRecipe">fetch</v-btn></v-card-title>
+        <v-card-text v-for="r in editRecipe" :key="r.id">{{ r }}</v-card-text>
+      </v-card>
+    </v-col>
     <v-col>
       <div style="position: relative; width: 100%; border: 0px solid">
         <add-recipe-dialog ref="addDialog" />
@@ -33,6 +39,9 @@ import { Component, Vue } from "vue-property-decorator";
 import { getUser } from "@/store/modules/userStore.module";
 import User from "@/modules/features/user/types/User";
 import AddRecipeDialog from "@/modules/features/rezeptbuch/components/AddRecipeDialog.vue";
+import Recipe, { recipeConverter } from "../rezeptbuch/types/Recipe";
+import { collection, DocumentData, getDocs, query, where } from "firebase/firestore";
+import { db } from "@/plugins/firebase";
 
 @Component({
   components: {
@@ -40,6 +49,19 @@ import AddRecipeDialog from "@/modules/features/rezeptbuch/components/AddRecipeD
   }
 })
 export default class UserDashboard extends Vue {
+
+  editRecipe: DocumentData[] = [];
+
+  async getUserRecipe(): Promise<void> {
+    const q = query(collection(db, "test"), where("createdBy", "==", this.user.id));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+      this.editRecipe.push(doc.data())
+    });
+  }
 
   get user(): User {
     return this.$store.getters[getUser()]
