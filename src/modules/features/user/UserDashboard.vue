@@ -26,7 +26,8 @@
             <v-btn @click="getUserRecipe">fetch</v-btn></v-card-title
           >
           <v-card-text v-for="r in editRecipe" :key="r.id">
-            <v-btn @click="updateRecipe(r)">update</v-btn><v-btn @click="overwrite(r)">overwrite</v-btn>{{ r }}</v-card-text
+            <v-btn @click="updateRecipe(r)">update</v-btn
+            ><v-btn @click="overwrite(r)">overwrite</v-btn>{{ r }}</v-card-text
           >
         </v-card>
       </v-col>
@@ -91,10 +92,14 @@ export default class UserDashboard extends Vue {
     RecipeServiceApi.updateEditRecipe(recipe).then(() => this.getUserRecipe());
   }
 
-  overwrite(r: Recipe): void { //Todo: hier weiter machen!
-    const newR = Recipe.createEmtptyRecipe().withId(r.id!).withCreatedBy(this.user.id)
-      .withActive(true).withRecipeName("Kacke")
-    RecipeServiceApi.overwriteRecipe(newR).then(()=> this.getUserRecipe());
+  overwrite(r: Recipe): void {
+    //Todo: hier weiter machen!
+    const newR = Recipe.createEmtptyRecipe()
+      .withId(r.id!)
+      .withCreatedBy(this.user.id)
+      .withActive(true)
+      .withRecipeName("Kacke");
+    RecipeServiceApi.overwriteRecipe(newR).then(() => this.getUserRecipe());
   }
 }
 </script>

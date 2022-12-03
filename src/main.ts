@@ -16,6 +16,13 @@ fireAuth.onAuthStateChanged((user) => {
       store,
       vuetify,
       render: (h) => h(App),
+      beforeCreate() {
+        if(user) {
+          console.log("eingelogged: ", user.uid)
+        }else {
+          console.log("nicht eingelogged!")
+        }
+      },
       created() {
         this.$store.dispatch(loginUser(), user?.uid);
       },

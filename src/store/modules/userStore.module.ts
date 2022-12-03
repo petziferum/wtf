@@ -33,18 +33,18 @@ export const userStoreModule = {
   },
 
   actions: {
-    async [LOGIN_USER_ACTION]({ commit }: Action, user: string): Promise<void> {
-      console.log("übergeben", user);
-      let id = "";
-      if (!user) {
-        const id = await UserServiceApi.userLogin(
+    async [LOGIN_USER_ACTION]({ commit }: Action, userId: string): Promise<void> {
+      console.log("User committed", userId);
+      let id: string | void;
+      if (!userId) {
+        id = await UserServiceApi.userLogin(
           "petziferum@gmail.com",
           "testtest"
         ).then((userId) => {
           return userId;
         });
       } else {
-        id = user;
+        id = userId;
       }
       if (id) {
         const user = await UserServiceApi.getUserAccount(id).then((res) => {

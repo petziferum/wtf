@@ -12,6 +12,7 @@
     </template>
     <v-card>
       <v-card-title>Möchtest du ein neues Rezept erstellen?</v-card-title>
+      <template v-if="user != null">
       <v-card-subtitle>{{ user.id }}</v-card-subtitle>
       <v-form ref="createRecipeForm">
         <v-card-text>
@@ -27,6 +28,10 @@
           <v-btn text color="green" @click="createRecipe">weiter</v-btn>
         </v-card-actions>
       </v-form>
+      </template>
+      <template v-else>
+        lade...
+      </template>
     </v-card>
   </v-dialog>
 </template>
@@ -42,7 +47,6 @@ import User from "@/modules/features/user/types/User";
 export default class AddRecipeDialog extends Vue {
   isOpen = false;
   newRecipe = Recipe.createEmtptyRecipe()
-    .withCreatedBy(this.user.id)
     .withActive(false);
   filledRule = [(v) => v != null || "Name muss ausgefüllt sein"];
 
@@ -68,9 +72,18 @@ export default class AddRecipeDialog extends Vue {
   }
 
   beforeMount(): void {
-    this.newRecipe = Recipe.createEmtptyRecipe()
-      .withCreatedBy(this.user.id)
-      .withActive(false);
+    console.log("this.user", this.user);
+    setTimeout(() => {
+      if (this.user != null) {
+        console.info("user vorhanden", this.user.id)
+        this.newRecipe = Recipe.createEmtptyRecipe()
+          .withCreatedBy(this.user.id)
+          .withRecipeName("leer")
+          .withActive(false);
+      } else {
+        console.log("kein User")
+      }
+    }, 1500)
   }
 }
 </script>
